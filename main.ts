@@ -1,3 +1,28 @@
+namespace SpriteKind {
+    export const ball = SpriteKind.create()
+}
+function spawnBall () {
+    ball = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . 1 1 1 1 1 1 1 . . . . 
+        . . . . 1 . f 1 1 f 1 1 . . . . 
+        . . . 1 . 1 1 1 1 1 1 1 1 . . . 
+        . . . 1 1 1 1 1 1 . 1 1 1 . . . 
+        . . . 1 1 1 1 1 1 1 f 1 1 . . . 
+        . . . 1 . f 1 f 1 1 . 1 1 1 . . 
+        . . . . 1 . 1 1 1 1 . 1 1 1 1 . 
+        . . . . 1 1 1 . 1 1 1 f 1 1 . . 
+        . . . . . . . 1 1 1 1 1 . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.ball)
+    ball.setPosition(75, 43)
+    ball.setVelocity(ballvx, ballvy)
+}
 function SpawnPlayer () {
     hero = sprites.create(img`
         ..............................
@@ -34,6 +59,21 @@ function SpawnPlayer () {
     hero.setPosition(84, 104)
     controller.moveSprite(hero, 300, controller.dx())
 }
+function bounceBall (mySprite: Sprite) {
+    ballvy = mySprite.vx * 1
+    ballvy = mySprite.vy * 1
+    mySprite.setVelocity(ballvx, ballvy)
+}
+sprites.onOverlap(SpriteKind.Player, SpriteKind.ball, function (sprite, otherSprite) {
+    bounceBall(otherSprite)
+    otherSprite.y = sprite.top + 1
+})
 let hero: Sprite = null
+let ball: Sprite = null
+let ballvx = 0
+let ballvy = 0
 SpawnPlayer()
+ballvy = 50
+ballvx = 50
+spawnBall()
 tiles.setCurrentTilemap(tilemap`level2`)
