@@ -7,7 +7,7 @@ scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile`, function (sprite, loca
     info.changeScoreBy(1)
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-	
+    ADVANCELEVEL()
 })
 function spawnBall () {
     ball = sprites.create(img`
@@ -67,10 +67,10 @@ scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile1`, function (sprite, loc
     info.changeScoreBy(10)
 })
 function ADVANCELEVEL () {
-    tiles.setCurrentTilemap(level_maps[level])
+    tiles.setCurrentTilemap(levelMaps[level])
     level += 1
-    spawnBall()
     game.splash("Level " + level)
+    spawnBall()
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.ball, function (sprite, otherSprite) {
     BounceBall(otherSprite)
@@ -82,8 +82,8 @@ let ballSpeed = 0
 let ballvx = 0
 let ballvy = 0
 let level = 0
-let level_maps: tiles.TileMapData[] = []
-level_maps = [tilemap`level2`, tilemap`level9`, tilemap`level2`]
+let levelMaps: tiles.TileMapData[] = []
+levelMaps = [tilemap`level2`, tilemap`level9`, tilemap`level2`]
 let LevelScoreNeeded = [20, 50, 60]
 let totalscoreneeded = 0
 level = 0
@@ -93,11 +93,6 @@ ballSpeed = 1000
 info.setScore(0)
 ADVANCELEVEL()
 SpawnPlayer()
-game.onUpdate(function () {
-    if (true) {
-    	
-    }
-})
 game.onUpdate(function () {
     totalscoreneeded += LevelScoreNeeded[level]
     if (info.score() == totalscoreneeded) {
