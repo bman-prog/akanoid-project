@@ -6,6 +6,12 @@ scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile`, function (sprite, loca
     BounceBall(ball)
     info.changeScoreBy(1)
 })
+function PowerUp1 () {
+    if (Math.percentChance(1)) {
+        scene.cameraShake(4, 500)
+        info.changeScoreBy(6)
+    }
+}
 function spawnBall () {
     ball = sprites.create(img`
         . . . . . . . . . . . . . . . . 
@@ -44,6 +50,7 @@ scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile0`, function (sprite, loc
     tiles.setTileAt(location, assets.tile`myTile2`)
     BounceBall(ball)
     info.changeScoreBy(7)
+    PowerUp2()
 })
 function BounceBall (ballSprite: Sprite) {
     ballvx = randint(ballSpeed / 3, ballSpeed)
@@ -57,6 +64,8 @@ scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile2`, function (sprite, loc
     tiles.setTileAt(location, assets.tile`myTile`)
     BounceBall(ball)
     info.changeScoreBy(3)
+    PowerUp1()
+    PowerUp2()
 })
 scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile1`, function (sprite, location) {
     tiles.setTileAt(location, assets.tile`myTile0`)
@@ -70,6 +79,23 @@ function ADVANCELEVEL () {
     game.splash("Level " + level)
     spawnBall()
 }
+function doSomething () {
+    tiles.setTileAt(tiles.getTileLocation(0, 0), assets.tile`transparency16`)
+}
+function PowerUp2 () {
+    if (Math.percentChance(30)) {
+        ballSpeed = 20000
+        effects.starField.startScreenEffect()
+        scene.cameraShake(2, 5000)
+        hero.startEffect(effects.coolRadial)
+        info.changeScoreBy(1000)
+    }
+    if (info.score() >= 30000) {
+        ADVANCELEVEL()
+        sprites.destroyAllSpritesOfKind(SpriteKind.ball)
+        spawnBall()
+    }
+}
 sprites.onOverlap(SpriteKind.Player, SpriteKind.ball, function (sprite, otherSprite) {
     BounceBall(otherSprite)
     otherSprite.y = sprite.top - 1
@@ -82,8 +108,8 @@ let ballvy = 0
 let level = 0
 let LevelScoreNeeded: number[] = []
 let levelMaps: tiles.TileMapData[] = []
-levelMaps = [tilemap`level2`, tilemap`level9`, tilemap`level2`]
-LevelScoreNeeded = [20, 50, 60]
+levelMaps = [tilemap`level2`, tilemap`level9`, tilemap`level12`]
+LevelScoreNeeded = [20, 50, 6000]
 let totalscoreneeded = 0
 level = 0
 ballvy = 100
