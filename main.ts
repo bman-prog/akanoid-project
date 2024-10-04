@@ -6,12 +6,22 @@ scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile`, function (sprite, loca
     BounceBall(ball)
     info.changeScoreBy(1)
 })
+function PowerUp3 () {
+    if (Math.percentChance(30)) {
+        spawnBall()
+        spawnBall()
+    }
+}
 function PowerUp1 () {
     if (Math.percentChance(1)) {
         scene.cameraShake(4, 500)
         info.changeScoreBy(6)
     }
 }
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    ADVANCELEVEL()
+    sprites.destroy(ball)
+})
 function spawnBall () {
     ball = sprites.create(img`
         . . . . . . . . . . . . . . . . 
@@ -51,6 +61,10 @@ scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile0`, function (sprite, loc
     BounceBall(ball)
     info.changeScoreBy(7)
     PowerUp2()
+    PowerUp3()
+})
+scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile3`, function (sprite, location) {
+    game.gameOver(false)
 })
 function BounceBall (ballSprite: Sprite) {
     ballvx = randint(ballSpeed / 3, ballSpeed)
@@ -66,11 +80,14 @@ scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile2`, function (sprite, loc
     info.changeScoreBy(3)
     PowerUp1()
     PowerUp2()
+    PowerUp3()
 })
 scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile1`, function (sprite, location) {
     tiles.setTileAt(location, assets.tile`myTile0`)
     BounceBall(ball)
     info.changeScoreBy(10)
+    PowerUp2()
+    PowerUp3()
 })
 function ADVANCELEVEL () {
     totalscoreneeded += LevelScoreNeeded[level]
@@ -90,10 +107,11 @@ function PowerUp2 () {
         hero.startEffect(effects.coolRadial)
         info.changeScoreBy(1000)
     }
-    if (info.score() >= 30000) {
+    if (info.score() >= 7000) {
         ADVANCELEVEL()
         sprites.destroyAllSpritesOfKind(SpriteKind.ball)
         spawnBall()
+        info.setScore(0)
     }
 }
 sprites.onOverlap(SpriteKind.Player, SpriteKind.ball, function (sprite, otherSprite) {
@@ -102,6 +120,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.ball, function (sprite, otherSpr
 })
 let hero: Sprite = null
 let ball: Sprite = null
+let score = 0
 let ballSpeed = 0
 let ballvx = 0
 let ballvy = 0
@@ -109,13 +128,13 @@ let level = 0
 let LevelScoreNeeded: number[] = []
 let levelMaps: tiles.TileMapData[] = []
 levelMaps = [tilemap`level2`, tilemap`level9`, tilemap`level12`]
-LevelScoreNeeded = [20, 50, 6000]
+LevelScoreNeeded = [20, 7000, 6000]
 let totalscoreneeded = 0
 level = 0
 ballvy = 100
 ballvx = 100
-ballSpeed = 1000
-info.setScore(0)
+ballSpeed = 200
+info.setScore(score)
 ADVANCELEVEL()
 SpawnPlayer()
 game.onUpdate(function () {
