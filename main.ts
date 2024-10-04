@@ -9,7 +9,6 @@ scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile`, function (sprite, loca
 function PowerUp3 () {
     if (Math.percentChance(30)) {
         spawnBall()
-        spawnBall()
     }
 }
 function PowerUp1 () {
@@ -61,7 +60,6 @@ scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile0`, function (sprite, loc
     BounceBall(ball)
     info.changeScoreBy(7)
     PowerUp2()
-    PowerUp3()
 })
 scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile3`, function (sprite, location) {
     game.gameOver(false)
@@ -110,7 +108,7 @@ function doSomething () {
     tiles.setTileAt(tiles.getTileLocation(0, 0), assets.tile`transparency16`)
 }
 function PowerUp2 () {
-    if (Math.percentChance(30)) {
+    if (Math.percentChance(75)) {
         ballSpeed = 20000
         effects.starField.startScreenEffect()
         scene.cameraShake(2, 5000)

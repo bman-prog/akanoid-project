@@ -193,7 +193,7 @@ namespace myTiles {
 2 . . . . . . . . 2 
 `, [myTiles.transparency16,myTiles.tile2,sprites.builtin.brick,myTiles.tile5], TileScale.Sixteen);
             case "level12":
-            case "level12":return tiles.createTilemap(hex`0a0008000201010101010101010202010101010101010102020101010101010101020200000000000000000202000000000000000002020000000000000000020200000000000000000202030303030303030302`, img`
+            case "level12":return tiles.createTilemap(hex`0a0008000103030303030303030101030303030303030301010303030303030303010100000000000000000101000000000000000001010000000000000000010100000000000000000101020202020202020201`, img`
 . . . . . . . . . . 
 . . . . . . . . . . 
 . . . . . . . . . . 
@@ -202,7 +202,7 @@ namespace myTiles {
 . . . . . . . . . . 
 . . . . . . . . . . 
 . . . . . . . . . . 
-`, [myTiles.transparency16,myTiles.tile3,sprites.builtin.brick,myTiles.tile5], TileScale.Sixteen);
+`, [myTiles.transparency16,sprites.builtin.brick,myTiles.tile5,myTiles.tile4], TileScale.Sixteen);
         }
         return null;
     })
