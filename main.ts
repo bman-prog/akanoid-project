@@ -74,6 +74,16 @@ function BounceBall (ballSprite: Sprite) {
     }
     ballSprite.setVelocity(ballvx, ballvy)
 }
+function setdifficulty () {
+    difficulty = game.askForNumber("Choose difficulty from 0-2", 1)
+    if (difficulty == 0) {
+        ballSpeed = 200
+    } else if (difficulty == 1) {
+        ballSpeed = 2000
+    } else if (difficulty == 2) {
+        ballSpeed = 20000
+    }
+}
 scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile2`, function (sprite, location) {
     tiles.setTileAt(location, assets.tile`myTile`)
     BounceBall(ball)
@@ -118,22 +128,23 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.ball, function (sprite, otherSpr
     BounceBall(otherSprite)
     otherSprite.y = sprite.top - 1
 })
+let difficulty = 0
+let ballSpeed = 0
 let hero: Sprite = null
 let ball: Sprite = null
 let score = 0
-let ballSpeed = 0
 let ballvx = 0
 let ballvy = 0
 let level = 0
 let LevelScoreNeeded: number[] = []
 let levelMaps: tiles.TileMapData[] = []
+setdifficulty()
 levelMaps = [tilemap`level2`, tilemap`level9`, tilemap`level12`]
 LevelScoreNeeded = [20, 7000, 6000]
 let totalscoreneeded = 0
 level = 0
 ballvy = 100
 ballvx = 100
-ballSpeed = 200
 info.setScore(score)
 ADVANCELEVEL()
 SpawnPlayer()
