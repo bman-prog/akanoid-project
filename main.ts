@@ -6,11 +6,6 @@ scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile`, function (sprite, loca
     BounceBall(ball)
     info.changeScoreBy(1)
 })
-function PowerUp3 () {
-    if (Math.percentChance(30)) {
-        spawnBall()
-    }
-}
 function PowerUp1 () {
     if (Math.percentChance(1)) {
         scene.cameraShake(4, 500)
@@ -42,6 +37,7 @@ function spawnBall () {
         `, SpriteKind.ball)
     ball.setBounceOnWall(true)
     ball.setVelocity(ballvx, ballvy)
+    ball.setPosition(71, 87)
     ball.setPosition(75, 43)
 }
 function SpawnPlayer () {
@@ -75,11 +71,11 @@ function BounceBall (ballSprite: Sprite) {
 function setdifficulty () {
     difficulty = game.askForNumber("Choose difficulty from 0-2", 1)
     if (difficulty == 0) {
-        ballSpeed = 200
+        ballSpeed = 100
     } else if (difficulty == 1) {
-        ballSpeed = 2000
+        ballSpeed = 200
     } else if (difficulty == 2) {
-        ballSpeed = 20000
+        ballSpeed = 300
     }
 }
 scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile2`, function (sprite, location) {
@@ -88,14 +84,12 @@ scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile2`, function (sprite, loc
     info.changeScoreBy(3)
     PowerUp1()
     PowerUp2()
-    PowerUp3()
 })
 scene.onOverlapTile(SpriteKind.ball, assets.tile`myTile1`, function (sprite, location) {
     tiles.setTileAt(location, assets.tile`myTile0`)
     BounceBall(ball)
     info.changeScoreBy(10)
     PowerUp2()
-    PowerUp3()
 })
 function ADVANCELEVEL () {
     totalscoreneeded += LevelScoreNeeded[level]
@@ -109,7 +103,7 @@ function doSomething () {
 }
 function PowerUp2 () {
     if (Math.percentChance(75)) {
-        ballSpeed = 20000
+        ballSpeed = 300
         effects.starField.startScreenEffect()
         scene.cameraShake(2, 5000)
         hero.startEffect(effects.coolRadial)
@@ -119,6 +113,7 @@ function PowerUp2 () {
         ADVANCELEVEL()
         sprites.destroyAllSpritesOfKind(SpriteKind.ball)
         spawnBall()
+        ball.setPosition(71, 87)
         info.setScore(0)
     }
 }
@@ -151,5 +146,6 @@ game.onUpdate(function () {
         ADVANCELEVEL()
         sprites.destroy(ball)
         info.setScore(0)
+        ball.setPosition(71, 87)
     }
 })
